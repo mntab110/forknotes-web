@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ForkNotes — A Private Personal Dining Journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #F26522;
+      --orange-dark: #d4551a;
+      --orange-light: #fde8d8;
+      --cream: #FDF8F3;
+      --ink: #1a1208;
+      --ink-soft: #5a4a38;
+      --ink-muted: #a0907e;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* Subtle grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(253, 248, 243, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(242, 101, 34, 0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--orange);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .nav-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Decorative rings */
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(242, 101, 34, 0.12);
+      pointer-events: none;
+    }
+    .ring-1 { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ring-2 { width: 720px; height: 720px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ring-3 { width: 960px; height: 960px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-color: rgba(242, 101, 34, 0.06); }
+
+    /* App icon */
+    .app-icon {
+      width: 96px;
+      height: 96px;
+      background: var(--orange);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 36px;
+      box-shadow: 0 20px 60px rgba(242, 101, 34, 0.35);
+      animation: floatIcon 4s ease-in-out infinite;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .app-icon svg {
+      width: 52px;
+      height: 52px;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.35s forwards;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      color: var(--ink-soft);
+      letter-spacing: 0.01em;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    /* Coming soon badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: 100px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.65s forwards;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* Notify section */
+    .notify-section {
+      margin-top: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .notify-section p {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+    }
+
+    .notify-form {
+      display: flex;
+      gap: 10px;
+      max-width: 380px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .notify-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 14px 18px;
+      border: 1.5px solid rgba(242, 101, 34, 0.25);
+      border-radius: 12px;
+      background: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .notify-input:focus {
+      border-color: var(--orange);
+    }
+
+    .notify-input::placeholder {
+      color: var(--ink-muted);
+    }
+
+    .notify-btn {
+      padding: 14px 24px;
+      background: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .notify-btn:hover { background: var(--orange-dark); }
+    .notify-btn:active { transform: scale(0.98); }
+
+    /* Features strip */
+    .features {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 80px;
+      padding: 0 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1s forwards;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+
+    .feature-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--orange-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-icon svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Success state */
+    .success-msg {
+      display: none;
+      color: var(--orange);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-logo" href="/">
+      <div class="nav-icon">
+        <!-- Fork + Notebook icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 2v4c0 1.1.9 2 2 2h1v14h2V8h1c1.1 0 2-.9 2-2V2h-2v3H8V2H6z" fill="white"/>
+          <path d="M16 2v6l1.5 1.5V22h2V9.5L21 8V2h-2v5h-1V2h-2z" fill="white"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">ForkNotes</span>
+    </a>
+  </nav>
+
+  <!-- Hero -->
+  <main class="hero">
+    <!-- Decorative rings -->
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+
+    <!-- App icon -->
+    <div class="app-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 2v4c0 1.1.9 2 2 2h1v14h2V8h1c1.1 0 2-.9 2-2V2h-2v3H8V2H6z" fill="white"/>
+        <path d="M16 2v6l1.5 1.5V22h2V9.5L21 8V2h-2v5h-1V2h-2z" fill="white"/>
+      </svg>
+    </div>
+
+    <p class="eyebrow">iOS App</p>
+    <h1>ForkNotes</h1>
+    <p class="subtitle">A Private Personal Dining Journal</p>
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Coming Soon
+    </div>
+
+    <div class="notify-section">
+      <p>Be the first to know when we launch</p>
+      <div class="notify-form">
+        <input class="notify-input" type="email" placeholder="you@example.com" id="notifyEmail" />
+        <button class="notify-btn" onclick="handleNotify()">Notify Me</button>
+      </div>
+      <p class="success-msg" id="successMsg">✓ You're on the list! We'll be in touch.</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Private & Secure
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Log Every Meal
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Beautiful Journals
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 ForkNotes. All rights reserved.
+  </footer>
+
+  <script>
+    function handleNotify() {
+      const email = document.getElementById('notifyEmail').value.trim();
+      const msg = document.getElementById('successMsg');
+      if (!email || !email.includes('@')) {
+        document.getElementById('notifyEmail').style.borderColor = '#e55';
+        return;
+      }
+      document.getElementById('notifyEmail').style.borderColor = '';
+      msg.style.display = 'block';
+      document.querySelector('.notify-form').style.opacity = '0.4';
+      document.querySelector('.notify-form').style.pointerEvents = 'none';
+    }
+  </script>
+</body>
+</html>
