@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Confirmed — ForkNotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #F26522;
+      --orange-dark: #d4551a;
+      --orange-light: #fde8d8;
+      --cream: #FDF8F3;
+      --ink: #1a1208;
+      --ink-soft: #5a4a38;
+      --ink-muted: #a0907e;
+      --success: #27ae60;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--ink);
+    }
+
+    /* Grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      background: rgba(253, 248, 243, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(242, 101, 34, 0.1);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+
+    .nav-icon {
+      width: 40px; height: 40px;
+      background: var(--orange);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .nav-icon svg { width: 22px; height: 22px; }
+
+    .nav-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* Main layout */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Card */
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 24px;
+      padding: 48px 40px;
+      box-shadow: 0 4px 6px rgba(26,18,8,0.04), 0 24px 80px rgba(26,18,8,0.08);
+      text-align: center;
+      animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .success-icon {
+      width: 72px; height: 72px;
+      background: #e8f8ee;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .success-icon svg { width: 38px; height: 38px; }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+    .desc {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .new-email {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 8px;
+      word-break: break-all;
+    }
+
+    .sub {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .btn-app {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: var(--orange);
+      color: white;
+      border-radius: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+      margin-bottom: 16px;
+    }
+
+    .btn-app:hover { background: var(--orange-dark); box-shadow: 0 8px 24px rgba(242, 101, 34, 0.3); }
+    .btn-app:active { transform: scale(0.99); }
+
+    .back-link {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    .back-link:hover { opacity: 0.7; }
+
+    @media (max-width: 480px) {
+      .card { padding: 36px 24px; }
+      nav { padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-logo" href="/">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M6 2v4c0 1.1.9 2 2 2h1v14h2V8h1c1.1 0 2-.9 2-2V2h-2v3H8V2H6z" fill="white"/>
+          <path d="M16 2v6l1.5 1.5V22h2V9.5L21 8V2h-2v5h-1V2h-2z" fill="white"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">ForkNotes</span>
+    </a>
+  </nav>
+
+  <main class="page">
+    <div class="card">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M5 13l4 4L19 7" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1>Email Confirmed</h1>
+      <p class="desc">Your email address has been updated successfully.</p>
+      <p class="new-email" id="newEmail" style="display:none;"></p>
+      <p class="sub">You can now sign in to ForkNotes with your new email address.</p>
+
+      <a href="forknotes://" class="btn-app">Open ForkNotes</a>
+      <a href="/" class="back-link">← Back to Home</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      // The email change is already confirmed server-side by the time Supabase
+      // redirects here — this page is purely a confirmation screen.
+      // If the new email is present in the token hash, show it for reference.
+      try {
+        var hash = window.location.hash ? window.location.hash.substring(1) : '';
+        if (hash) {
+          var token = new URLSearchParams(hash).get('access_token');
+          if (token) {
+            var parts = token.split('.');
+            if (parts.length === 3) {
+              var payload = JSON.parse(
+                decodeURIComponent(
+                  atob(parts[1].replace(/-/g, '+').replace(/_/g, '/'))
+                    .split('')
+                    .map(function (c) {
+                      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    })
+                    .join('')
+                )
+              );
+              if (payload && payload.email) {
+                var el = document.getElementById('newEmail');
+                el.textContent = payload.email;
+                el.style.display = 'block';
+              }
+            }
+          }
+        }
+      } catch (e) {
+        // Non-fatal — just skip showing the email.
+      }
+      // Strip the token from the URL so it doesn't linger in history.
+      if (window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    })();
+  </script>
+</body>
+</html>
