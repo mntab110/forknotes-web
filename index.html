@@ -3,6 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--
+    Supabase auth redirect router.
+    Auth links (email change, password recovery) fall back to the Site URL
+    (this root page) with the token in the URL hash, e.g.
+      forknotes.com/#access_token=...&type=email_change
+    Route those to the correct page BEFORE the landing page renders so the
+    user never sees the Coming Soon screen flash.
+  -->
+  <script>
+    (function () {
+      var hash = window.location.hash ? window.location.hash.substring(1) : '';
+      if (!hash) return;
+      var type = new URLSearchParams(hash).get('type');
+      if (type === 'email_change' || type === 'signup') {
+        window.location.replace('/email-confirmed' + window.location.hash);
+      } else if (type === 'recovery') {
+        window.location.replace('/reset-password' + window.location.hash);
+      }
+    })();
+  </script>
   <title>ForkNotes — A Private Personal Dining Journal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
