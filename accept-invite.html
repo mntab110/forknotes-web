@@ -133,6 +133,51 @@
     .btn-app:hover { background: var(--orange-dark); box-shadow: 0 8px 24px rgba(242, 101, 34, 0.3); }
     .btn-app:active { transform: scale(0.99); }
 
+    .btn-store {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      background: white;
+      color: var(--ink);
+      border: 1.5px solid rgba(242, 101, 34, 0.3);
+      border-radius: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s;
+      margin: 8px 0 16px;
+    }
+    .btn-store:hover { border-color: var(--orange); box-shadow: 0 8px 24px rgba(242, 101, 34, 0.12); }
+    .btn-store:active { transform: scale(0.99); }
+    .btn-store .store-icon {
+      width: 28px; height: 28px;
+      background: var(--orange);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-store .store-icon svg { width: 16px; height: 16px; }
+
+    .divider {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin: 4px 0 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: var(--orange-dark);
+      font-weight: 500;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
     .sub {
       font-size: 0.85rem;
       color: var(--ink-muted);
@@ -173,16 +218,30 @@
 
       <h1>You're Invited!</h1>
       <p class="desc">
-        You've been invited to join a ForkNotes Family Plan. Open the ForkNotes
-        app to accept — you'll be able to rate dishes and add your own notes,
-        shared with your family.
+        You've been invited to join a ForkNotes Family Plan. If you already
+        have a ForkNotes account, tap Join below or accept within the app.
       </p>
 
-      <a id="openBtn" href="#" class="btn-app">Open in ForkNotes</a>
-      <p class="sub" id="fallback">
-        Don't have the app yet? Install ForkNotes, then sign in or create your
-        free account with the email this invitation was sent to — your
-        invitation will be waiting in <strong>Settings</strong>.
+      <a id="openBtn" href="#" class="btn-app">Join Family Plan</a>
+
+      <p class="sub">
+        If you do not have an account, install ForkNotes and sign up using the
+        email this invitation was sent to, then accept your invitation.
+      </p>
+
+      <!-- App Store placeholder — replace href with the real App Store URL once published -->
+      <a id="storeBtn" href="#" class="btn-store">
+        <span class="store-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 2v4c0 1.1.9 2 2 2h1v14h2V8h1c1.1 0 2-.9 2-2V2h-2v3H8V2H6z" fill="white"/>
+            <path d="M16 2v6l1.5 1.5V22h2V9.5L21 8V2h-2v5h-1V2h-2z" fill="white"/>
+          </svg>
+        </span>
+        ForkNotes
+      </a>
+
+      <p class="note">
+        You'll enjoy the Pro Family Plan free as part of your invitation.
       </p>
     </div>
   </main>
