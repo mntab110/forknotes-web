@@ -1,0 +1,4 @@
+# Forward the old domain to the new primary domain, preserving the path.
+# Netlify applies these top-to-bottom; keep domain redirects above any catch-all.
+https://forknotes.com/*      https://forksmart.app/:splat  301!
+https://www.forknotes.com/*  https://forksmart.app/:splat  301!
