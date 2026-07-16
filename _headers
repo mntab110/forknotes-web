@@ -1,0 +1,4 @@
+# Apple requires the App Site Association file to be served as JSON, at
+# /.well-known/apple-app-site-association, with no extension and no redirect.
+/.well-known/apple-app-site-association
+  Content-Type: application/json
