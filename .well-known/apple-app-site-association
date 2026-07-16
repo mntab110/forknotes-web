@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["J62T2ZDVGY.com.appsimple.forknotes"],
+        "components": [
+          { "/": "/open" },
+          { "/": "/accept-invite" }
+        ]
+      }
+    ]
+  }
+}
