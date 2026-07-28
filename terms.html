@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ForkSmart Privacy Policy</title>
-  <meta name="description" content="Privacy Policy for ForkSmart, the private personal dining journal by AppSimple LLC." />
+  <title>ForkSmart Terms of Use</title>
+  <meta name="description" content="Terms of Use for ForkSmart, the private personal dining journal by AppSimple LLC." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://forksmart.app/privacy" />
+  <link rel="canonical" href="https://forksmart.app/terms" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="ForkSmart Privacy Policy" />
-  <meta property="og:description" content="How ForkSmart collects, uses, and protects your information." />
-  <meta property="og:url" content="https://forksmart.app/privacy" />
+  <meta property="og:title" content="ForkSmart Terms of Use" />
+  <meta property="og:description" content="The terms that govern your use of ForkSmart." />
+  <meta property="og:url" content="https://forksmart.app/terms" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,7 +45,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Subtle grain, consistent with the ForkSmart landing page */
     body::before {
       content: '';
       position: fixed;
@@ -136,32 +135,16 @@
 
     h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.45rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--ink);
-      margin: 34px 0 12px;
+      margin: 30px 0 8px;
       letter-spacing: -0.01em;
     }
+    h2 .num { color: var(--orange); }
     h2:first-of-type { margin-top: 8px; }
 
     p { margin-bottom: 14px; }
-
-    ul { list-style: none; margin: 0 0 14px; padding: 0; }
-    ul li {
-      position: relative;
-      padding-left: 26px;
-      margin-bottom: 10px;
-    }
-    ul li::before {
-      content: '';
-      position: absolute;
-      left: 6px;
-      top: 0.62em;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--orange);
-    }
 
     .contact-line {
       margin-top: 6px;
@@ -191,20 +174,21 @@
       font-weight: 700;
       color: var(--ink);
     }
-    .foot-sub { font-size: 0.85rem; color: var(--ink-muted); margin-top: 4px; }
     .foot-links { margin-top: 16px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
     .foot-links a { font-size: 0.85rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
     .foot-links a:hover, .foot-links a:focus-visible { color: var(--orange-dark); text-decoration: underline; }
     .foot-copy { font-size: 0.78rem; color: var(--ink-muted); margin-top: 18px; }
 
-    a:focus-visible, summary:focus-visible {
+    a:focus-visible, .nav-links a:focus-visible {
       outline: 2px solid var(--orange);
       outline-offset: 3px;
       border-radius: 4px;
     }
 
-    @media (max-width: 480px) {
-      .nav-links { gap: 16px; }
+    @media (max-width: 560px) {
+      nav { padding: 14px 16px; }
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 0.85rem; }
       .nav-wordmark { font-size: 1.15rem; }
     }
   </style>
@@ -221,76 +205,89 @@
     <div class="nav-links">
       <a href="/">Home</a>
       <a href="/support">Support</a>
-      <a href="/privacy" aria-current="page">Privacy</a>
-      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms" aria-current="page">Terms</a>
     </div>
   </nav>
 
   <main class="wrap">
     <header class="page-head">
       <p class="eyebrow">Legal</p>
-      <h1>Privacy Policy</h1>
+      <h1>Terms of Use</h1>
       <p class="provider">AppSimple LLC</p>
       <p class="effective">Effective Date: April 2026</p>
     </header>
 
     <div class="card">
-      <p class="lead">
-        ForkSmart is a private personal dining journal provided by AppSimple LLC.
-        This Privacy Policy explains how we collect, use, and protect your information.
+      <p class="lead">By using ForkSmart, you agree to these Terms of Use.</p>
+
+      <h2><span class="num">1.</span> Service Description</h2>
+      <p>
+        ForkSmart is a personal dining journal for logging restaurant experiences,
+        ratings, dishes, and photos.
       </p>
 
-      <h2>Information We Collect</h2>
-      <ul>
-        <li>Account information (email, name)</li>
-        <li>Your dining experiences, ratings, notes, photos, and receipts</li>
-        <li>Device location (only when you use the Map feature or allow contextual suggestions)</li>
-        <li>Usage data (app interactions)</li>
-      </ul>
-
-      <h2>How We Use Your Data</h2>
-      <ul>
-        <li>To provide and improve the ForkSmart service</li>
-        <li>To generate your personal reports (including the Business Meals Report)</li>
-        <li>To process receipts using AI</li>
-      </ul>
-
-      <h2>Data Storage</h2>
+      <h2><span class="num">2.</span> Account &amp; Data Ownership</h2>
       <p>
-        All your data is stored securely in Supabase (US-based servers). Photos and
-        receipts are stored privately.
+        You retain ownership of your data. We only store and process it to provide
+        the service.
       </p>
 
-      <h2>AI Processing</h2>
+      <h2><span class="num">3.</span> AI &amp; Receipt Scanning</h2>
       <p>
-        When you scan a receipt, the image is sent to OpenAI for the purpose of
-        extracting the restaurant name, dishes, and amounts. We do not attach any
-        personal identifiers to these requests.
+        Receipt scanning uses third-party AI services (currently OpenAI). By uploading
+        a receipt, you grant AppSimple LLC a limited license to send the image to the
+        AI provider solely for processing.
       </p>
 
-      <h2>Sharing</h2>
-      <ul>
-        <li>Your data is private by default. We do not sell or share your personal data.</li>
-        <li>You may optionally share individual experiences to social media.</li>
-        <li>AppSimple LLC reserves the right to use anonymized, aggregated data (with all personal identifiers removed) for product improvement and analytics.</li>
-      </ul>
-
-      <h2>Your Rights</h2>
+      <h2><span class="num">4.</span> Sharing</h2>
       <p>
-        You can export or delete your data at any time from the app's Settings screen
-        (Settings&nbsp;→&nbsp;Export&nbsp;Data, or Settings&nbsp;→&nbsp;Account&nbsp;→&nbsp;Delete&nbsp;Account).
+        All content is private by default. Any sharing to social media is done at your
+        discretion.
       </p>
 
-      <h2>Children</h2>
+      <h2><span class="num">5.</span> Anonymized Data</h2>
       <p>
-        ForkSmart is intended for users aged 13 years and older. We do not knowingly
-        collect personal information from children under 13.
+        We may use de-identified, aggregated data for analytics and product improvement.
+      </p>
+
+      <h2><span class="num">6.</span> Subscriptions &amp; Billing</h2>
+      <p>
+        ForkSmart offers optional paid subscriptions. Subscriptions and billing are
+        managed through your Apple Account and are subject to Apple's applicable
+        payment and subscription terms. You can review, change, or cancel your
+        subscription at any time in your Apple Account settings.
+      </p>
+
+      <h2><span class="num">7.</span> Termination</h2>
+      <p>
+        You may delete your account and data at any time. We may suspend or terminate
+        accounts that violate these terms.
+      </p>
+
+      <h2><span class="num">8.</span> Disclaimers</h2>
+      <p>
+        ForkSmart is provided "as is." We are not responsible for the accuracy of
+        AI-extracted data or any decisions you make based on the app.
+      </p>
+
+      <h2><span class="num">9.</span> Limitation of Liability</h2>
+      <p>
+        To the fullest extent permitted by law, AppSimple LLC shall not be liable for
+        any indirect, incidental, or consequential damages arising from your use of
+        ForkSmart.
+      </p>
+
+      <h2><span class="num">10.</span> Governing Law</h2>
+      <p>
+        These Terms are governed by the laws of the Commonwealth of Virginia, United
+        States.
       </p>
 
       <h2>Contact Us</h2>
-      <p>If you have any questions about this Privacy Policy, please contact us:</p>
+      <p>If you have any questions about these Terms, please contact us:</p>
       <p class="contact-line">
-        Email <a href="mailto:admin@appsimple.com?subject=ForkSmart%20Privacy%20Question">admin@appsimple.com</a>
+        Email <a href="mailto:admin@appsimple.com?subject=ForkSmart%20Terms%20Question">admin@appsimple.com</a>
       </p>
     </div>
 

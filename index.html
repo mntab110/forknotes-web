@@ -103,6 +103,30 @@
       letter-spacing: -0.02em;
     }
 
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--orange-dark); }
+    .nav-links a[aria-current="page"] { color: var(--orange-dark); font-weight: 600; }
+    .nav-links a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+
+    @media (max-width: 560px) {
+      nav { padding: 14px 16px; }
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 0.85rem; }
+      .nav-wordmark { font-size: 1.15rem; }
+    }
+
     /* Hero */
     .hero {
       min-height: 100vh;
@@ -321,6 +345,22 @@
       position: relative;
       z-index: 1;
     }
+    .foot-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .foot-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+    .foot-links a:hover,
+    .foot-links a:focus-visible { color: var(--orange-dark); text-decoration: underline; }
+    .foot-copy { font-size: 0.78rem; color: var(--ink-muted); }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -347,6 +387,12 @@
       </div>
       <span class="nav-wordmark"><span style="color:#E0742B">Fork</span>Smart</span>
     </a>
+    <div class="nav-links">
+      <a href="/" aria-current="page">Home</a>
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </div>
   </nav>
 
   <!-- Hero -->
@@ -402,7 +448,13 @@
   </main>
 
   <footer>
-    © 2025 ForkSmart. All rights reserved.
+    <nav class="foot-links" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+    <div class="foot-copy">© 2026 AppSimple LLC. All rights reserved.</div>
   </footer>
 
   <script>
