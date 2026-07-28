@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ForkSmart Privacy Policy</title>
+  <meta name="description" content="Privacy Policy for ForkSmart, the private personal dining journal by AppSimple LLC." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://forksmart.app/privacy" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ForkSmart Privacy Policy" />
+  <meta property="og:description" content="How ForkSmart collects, uses, and protects your information." />
+  <meta property="og:url" content="https://forksmart.app/privacy" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #E0742B;
+      --orange-dark: #d4551a;
+      --orange-light: #fde8d8;
+      --cream: #FDF8F3;
+      --ink: #1a1208;
+      --ink-soft: #5a4a38;
+      --ink-muted: #a0907e;
+      --card: #ffffff;
+      --border: rgba(224, 116, 43, 0.16);
+      --shadow: 0 12px 40px rgba(90, 74, 56, 0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--ink-soft);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle grain, consistent with the ForkSmart landing page */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    a { color: var(--orange-dark); }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(253, 248, 243, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-icon { width: 38px; height: 38px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+    .nav-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .nav-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; align-items: center; gap: 22px; }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--orange-dark); }
+
+    /* Layout */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 24px 40px;
+    }
+
+    .page-head { margin-bottom: 8px; }
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .provider { font-weight: 600; color: var(--ink); font-size: 1.02rem; }
+    .effective { color: var(--ink-muted); font-size: 0.9rem; margin-top: 2px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 5vw, 44px);
+      margin-top: 28px;
+    }
+
+    .lead { font-size: 1.05rem; color: var(--ink-soft); }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 34px 0 12px;
+      letter-spacing: -0.01em;
+    }
+    h2:first-of-type { margin-top: 8px; }
+
+    p { margin-bottom: 14px; }
+
+    ul { list-style: none; margin: 0 0 14px; padding: 0; }
+    ul li {
+      position: relative;
+      padding-left: 26px;
+      margin-bottom: 10px;
+    }
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0.62em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+
+    .contact-line {
+      margin-top: 6px;
+      padding: 18px 20px;
+      background: var(--orange-light);
+      border-radius: 14px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .contact-line a { font-weight: 600; }
+
+    .backlink { display: inline-block; margin-top: 28px; font-weight: 600; text-decoration: none; }
+    .backlink:hover { text-decoration: underline; }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 24px 56px;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+    .foot-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .foot-sub { font-size: 0.85rem; color: var(--ink-muted); margin-top: 4px; }
+    .foot-links { margin-top: 16px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .foot-links a { font-size: 0.85rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
+    .foot-links a:hover, .foot-links a:focus-visible { color: var(--orange-dark); text-decoration: underline; }
+    .foot-copy { font-size: 0.78rem; color: var(--ink-muted); margin-top: 18px; }
+
+    a:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--orange);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { gap: 16px; }
+      .nav-wordmark { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">
+      <span class="nav-icon">
+        <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="ForkSmart logo" />
+      </span>
+      <span class="nav-wordmark"><span style="color:#E0742B">Fork</span>Smart</span>
+    </a>
+    <div class="nav-links">
+      <a href="/support">Support</a>
+      <a href="/">Home</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="provider">AppSimple LLC</p>
+      <p class="effective">Effective Date: April 2026</p>
+    </header>
+
+    <div class="card">
+      <p class="lead">
+        ForkSmart is a private personal dining journal provided by AppSimple LLC.
+        This Privacy Policy explains how we collect, use, and protect your information.
+      </p>
+
+      <h2>Information We Collect</h2>
+      <ul>
+        <li>Account information (email, name)</li>
+        <li>Your dining experiences, ratings, notes, photos, and receipts</li>
+        <li>Device location (only when you use the Map feature or allow contextual suggestions)</li>
+        <li>Usage data (app interactions)</li>
+      </ul>
+
+      <h2>How We Use Your Data</h2>
+      <ul>
+        <li>To provide and improve the ForkSmart service</li>
+        <li>To generate your personal reports (including the Business Meals Report)</li>
+        <li>To process receipts using AI</li>
+      </ul>
+
+      <h2>Data Storage</h2>
+      <p>
+        All your data is stored securely in Supabase (US-based servers). Photos and
+        receipts are stored privately.
+      </p>
+
+      <h2>AI Processing</h2>
+      <p>
+        When you scan a receipt, the image is sent to OpenAI for the purpose of
+        extracting the restaurant name, dishes, and amounts. We do not attach any
+        personal identifiers to these requests.
+      </p>
+
+      <h2>Sharing</h2>
+      <ul>
+        <li>Your data is private by default. We do not sell or share your personal data.</li>
+        <li>You may optionally share individual experiences to social media.</li>
+        <li>AppSimple LLC reserves the right to use anonymized, aggregated data (with all personal identifiers removed) for product improvement and analytics.</li>
+      </ul>
+
+      <h2>Your Rights</h2>
+      <p>
+        You can export or delete your data at any time from the app's Settings screen
+        (Settings&nbsp;→&nbsp;Export&nbsp;Data, or Settings&nbsp;→&nbsp;Account&nbsp;→&nbsp;Delete&nbsp;Account).
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        ForkSmart is intended for users aged 13 years and older. We do not knowingly
+        collect personal information from children under 13.
+      </p>
+
+      <h2>Contact Us</h2>
+      <p>If you have any questions about this Privacy Policy, please contact us:</p>
+      <p class="contact-line">
+        Email <a href="mailto:admin@appsimple.com?subject=ForkSmart%20Privacy%20Question">admin@appsimple.com</a>
+      </p>
+    </div>
+
+    <a class="backlink" href="/support">← Back to ForkSmart Support</a>
+  </main>
+
+  <footer>
+    <div class="foot-brand"><span style="color:#E0742B">Fork</span>Smart</div>
+    <div class="foot-sub">An App by AppSimple</div>
+    <div class="foot-links">
+      <a href="/">ForkSmart Website</a>
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
+    <div class="foot-copy">© 2026 AppSimple LLC. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>
