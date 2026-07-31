@@ -207,6 +207,19 @@
       .nav-links { gap: 16px; }
       .nav-wordmark { font-size: 1.15rem; }
     }
+      /* Mobile menu toggle (shared across pages) */
+    .nav-toggle { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -6px -8px -6px 0; border: none; background: transparent; color: var(--ink); border-radius: 12px; cursor: pointer; }
+    .nav-toggle:hover { background: rgba(224,116,43,0.08); color: var(--orange-dark); }
+    .nav-toggle .i-x { display: none; }
+    @media (max-width: 640px) {
+      .nav-toggle { display: inline-flex; }
+      .nav-toggle[aria-expanded="true"] .i-bars { display: none; }
+      .nav-toggle[aria-expanded="true"] .i-x { display: inline; }
+      nav .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 2px; background: var(--cream); border-bottom: 1px solid var(--border); box-shadow: 0 18px 50px rgba(58,40,18,0.12); padding: 8px 14px 16px; display: none; }
+      .nav-toggle[aria-expanded="true"] ~ .nav-links { display: flex; }
+      nav .nav-links a { padding: 13px 12px; font-size: 1rem; border-radius: 10px; }
+      nav .nav-links a[aria-current="page"] { background: var(--orange-light); color: var(--orange-dark); }
+    }
   </style>
 </head>
 <body>
@@ -218,7 +231,8 @@
       </span>
       <span class="nav-wordmark"><span style="color:#E0742B">Fork</span>Smart</span>
     </a>
-    <div class="nav-links">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav" type="button"><svg class="i-bars" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><svg class="i-x" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
+      <div class="nav-links" id="primary-nav">
       <a href="/">Home</a>
       <a href="/support">Support</a>
       <a href="/privacy" aria-current="page">Privacy</a>
@@ -306,5 +320,20 @@
     <div class="foot-copy">© 2026 AppSimple LLC. All rights reserved.</div>
   </footer>
 
+  <script>
+    (function () {
+      var btn = document.getElementById('nav-toggle');
+      var nav = document.getElementById('primary-nav');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      }
+      btn.addEventListener('click', function () { setOpen(btn.getAttribute('aria-expanded') !== 'true'); });
+      nav.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+      document.addEventListener('click', function (e) { if (btn.getAttribute('aria-expanded') === 'true' && !e.target.closest('nav')) setOpen(false); });
+    })();
+  </script>
 </body>
 </html>
