@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ForkSmart">
+  <rect width="64" height="64" rx="15" fill="#E0742B"/>
+  <g fill="none" stroke="#FDF8F3" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 16v13c0 3 5 3 5 0V16"/>
+    <path d="M25.5 16v9"/>
+    <path d="M40 16c-3 0-5 3-5 8s2 6 5 6"/>
+    <path d="M40 16v32"/>
+    <path d="M23 34v14"/>
+  </g>
+</svg>

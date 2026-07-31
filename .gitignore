@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+# Source-only marketing assets (deploy ships the optimized versions in Assets/opt)
+Assets/AppStore.docx
+Assets/0*.png

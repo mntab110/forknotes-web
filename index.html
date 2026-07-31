@@ -4,12 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!--
-    Supabase auth redirect router.
+    Supabase auth redirect router (unchanged — must run before render).
     Auth links (email change, password recovery) fall back to the Site URL
-    (this root page) with the token in the URL hash, e.g.
-      forksmart.app/#access_token=...&type=email_change
-    Route those to the correct page BEFORE the landing page renders so the
-    user never sees the Coming Soon screen flash.
+    (this root page) with the token in the URL hash. Route those to the correct
+    page BEFORE the landing page renders so the user never sees the homepage flash.
   -->
   <script>
     (function () {
@@ -23,453 +21,561 @@
       }
     })();
   </script>
-  <title>ForkSmart — A Private Personal Dining Journal</title>
+
+  <!-- ── SEO ─────────────────────────────────────────────────────────── -->
+  <title>ForkSmart — Your Private Dining Journal | Turn Receipts into Memories</title>
+  <meta name="description" content="ForkSmart turns a receipt into a private dining journal. Snap or upload a receipt and it extracts the restaurant, date, dishes and prices — then add ratings, notes and photos to remember every visit and dish. A personal restaurant journal for iPhone. Coming soon." />
+  <link rel="canonical" href="https://forksmart.app/" />
+  <meta name="theme-color" content="#FDF8F3" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ForkSmart" />
+  <meta property="og:title" content="ForkSmart — Your Private Dining Journal" />
+  <meta property="og:description" content="Snap or upload a receipt and ForkSmart turns it into a private dining journal — restaurants, dishes, prices, ratings, photos and notes. Coming soon for iPhone." />
+  <meta property="og:url" content="https://forksmart.app/" />
+  <meta property="og:image" content="https://forksmart.app/Assets/opt/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="ForkSmart — a private dining journal for iPhone" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ForkSmart — Your Private Dining Journal" />
+  <meta name="twitter:description" content="Turn receipts into memories. A private dining journal for iPhone — restaurants, dishes, prices, ratings, photos and notes. Coming soon." />
+  <meta name="twitter:image" content="https://forksmart.app/Assets/opt/og-image.jpg" />
+
+  <!-- Apple / PWA -->
+  <meta name="apple-mobile-web-app-title" content="ForkSmart" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Structured data: the app + org (factual only — no ratings/reviews claimed) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ForkSmart",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "iOS",
+    "description": "A private dining journal for iPhone. Snap or upload a receipt and ForkSmart extracts the restaurant, date, dishes and prices, then lets you add ratings, notes and photos to remember every visit and dish.",
+    "url": "https://forksmart.app/",
+    "image": "https://forksmart.app/Assets/opt/og-image.jpg",
+    "publisher": { "@type": "Organization", "name": "AppSimple LLC", "url": "https://forksmart.app/" }
+  }
+  </script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --orange: #E0742B;
-      --orange-dark: #d4551a;
-      --orange-light: #fde8d8;
+      --orange-dark: #C85F1B;
+      --orange-light: #FBE7D5;
       --cream: #FDF8F3;
-      --ink: #1a1208;
-      --ink-soft: #5a4a38;
-      --ink-muted: #a0907e;
+      --cream-2: #F7EEE2;
+      --card: #FFFFFF;
+      --ink: #1A1208;
+      --ink-soft: #5A4A38;
+      --ink-muted: #9A8A78;
+      --green: #4E7B52;
+      --green-soft: #E7EFE6;
+      --line: rgba(224, 116, 43, 0.14);
+      --shadow-sm: 0 4px 18px rgba(58, 40, 18, 0.06);
+      --shadow-md: 0 18px 50px rgba(58, 40, 18, 0.12);
+      --shadow-lg: 0 30px 80px rgba(58, 40, 18, 0.18);
+      --r: 22px;
+      --maxw: 1120px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    html, body {
-      height: 100%;
-      font-family: 'DM Sans', sans-serif;
-      background-color: var(--cream);
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
+      background: var(--cream);
       color: var(--ink);
+      line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Subtle grain texture */
+    /* Subtle grain */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
     }
 
-    /* Nav */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(253, 248, 243, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(242, 101, 34, 0.1);
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    a { color: inherit; }
+    img, video { max-width: 100%; display: block; }
+
+    /* Skip link */
+    .skip { position: absolute; left: -999px; top: 0; z-index: 200; background: var(--ink); color: var(--cream); padding: 10px 16px; border-radius: 0 0 10px 0; }
+    .skip:focus { left: 0; }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header.site {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(253, 248, 243, 0.82);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: var(--maxw); margin: 0 auto; }
+    .logo { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; }
+    .logo img { width: 34px; height: 34px; border-radius: 9px; }
+    .logo .word { font-family: 'Playfair Display', serif; font-size: 1.32rem; font-weight: 800; letter-spacing: -0.02em; }
+    .logo .word b { color: var(--orange); font-weight: 800; }
+    .navlinks { display: flex; align-items: center; gap: 6px; }
+    .navlinks a { font-size: 0.9rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; padding: 7px 12px; border-radius: 9px; transition: color .15s, background .15s; }
+    .navlinks a:hover { color: var(--orange-dark); background: rgba(224,116,43,0.07); }
+    .navlinks a[aria-current="page"] { color: var(--orange-dark); font-weight: 600; }
+    .navlinks a:focus-visible, .logo:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 8px; }
+
+    /* ── Buttons / chips ────────────────────────────────────── */
+    .badge { display: inline-flex; align-items: center; gap: 9px; background: var(--ink); color: var(--cream); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 9px 18px; border-radius: 100px; }
+    .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+    .eyebrow { display: inline-block; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; }
+
+    /* ── Launch CTA (REUSABLE — replace .cta-soon with an App Store badge + QR at launch) ── */
+    .cta { display: inline-flex; flex-direction: column; align-items: center; gap: 14px; }
+    .cta-soon { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; }
+    .cta .sub { font-size: 0.9rem; color: var(--ink-muted); }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.75); } }
+    @media (prefers-reduced-motion: no-preference) { .badge .dot { animation: pulse 2.4s ease infinite; } }
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    .hero { position: relative; padding: 68px 0 40px; overflow: hidden; }
+    .hero .wrap { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
+    .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(224,116,43,0.10); top: -8%; right: -14%; pointer-events: none; }
+    .ring.a { width: 560px; height: 560px; }
+    .ring.b { width: 820px; height: 820px; top: -22%; right: -26%; border-color: rgba(224,116,43,0.06); }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); background: var(--orange-light); padding: 7px 14px; border-radius: 100px; margin-bottom: 22px; }
+    h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1.03; letter-spacing: -0.03em; margin-bottom: 20px; }
+    h1 .accent { color: var(--orange); }
+    .lede { font-size: clamp(1.05rem, 1.5vw, 1.2rem); font-weight: 300; color: var(--ink-soft); max-width: 33ch; margin-bottom: 30px; }
+    .hero-cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+    /* Phone + video */
+    .phone-col { display: flex; justify-content: center; }
+    .phone { position: relative; width: min(300px, 76vw); aspect-ratio: 1290 / 2796; border-radius: 46px; background: #14100a; padding: 11px; box-shadow: var(--shadow-lg); }
+    .phone::before { content: ''; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 84px; height: 22px; background: #14100a; border-radius: 100px; z-index: 3; }
+    .phone-video { width: 100%; height: 100%; object-fit: cover; border-radius: 36px; background: var(--cream-2); }
+    .phone-glow { position: absolute; inset: -6% -6% auto; height: 60%; background: radial-gradient(60% 60% at 50% 0%, rgba(224,116,43,0.18), transparent 70%); filter: blur(20px); z-index: -1; }
+
+    /* ── Sections ───────────────────────────────────────────── */
+    section { padding: clamp(56px, 8vw, 104px) 0; position: relative; z-index: 1; }
+    section.tint { background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 12% 88%, var(--cream) 100%); }
+    .sec-head { max-width: 640px; margin: 0 auto clamp(36px, 5vw, 60px); text-align: center; }
+    h2 { font-family: 'Playfair Display', serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.1; letter-spacing: -0.02em; }
+    .sec-head p { margin-top: 16px; font-size: 1.06rem; color: var(--ink-soft); font-weight: 300; }
+
+    /* Split row (text + screenshot) */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+    .split.rev .copy { order: 2; }
+    .split .copy { max-width: 460px; }
+    .split h2 { text-align: left; }
+    .split .body { margin-top: 16px; font-size: 1.06rem; color: var(--ink-soft); font-weight: 300; }
+    .shot-frame { display: flex; justify-content: center; }
+    .split.rev .shot-frame { justify-content: center; }
+    .shot { width: 100%; max-width: 326px; height: auto; border-radius: 30px; box-shadow: var(--shadow-md); background: var(--cream-2); }
+    .explore-pair { display: flex; gap: 22px; justify-content: center; }
+    .explore-pair .shot { max-width: 260px; }
+    .explore-pair .shot:nth-child(2) { margin-top: 40px; }
+
+    /* Feature list */
+    .flist { list-style: none; margin-top: 24px; display: grid; gap: 13px; }
+    .flist li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.98rem; color: var(--ink); }
+    .flist .tick { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--green-soft); display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+    .flist .tick svg { width: 12px; height: 12px; }
+
+    /* Steps (receipt→journal) */
+    .steps { display: grid; gap: 16px; margin-top: 26px; counter-reset: step; }
+    .step { display: flex; gap: 16px; align-items: flex-start; }
+    .step .num { flex-shrink: 0; width: 34px; height: 34px; border-radius: 11px; background: var(--orange); color: #fff; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
+    .step .st { font-weight: 600; font-size: 1rem; }
+    .step .sd { font-size: 0.95rem; color: var(--ink-soft); font-weight: 300; }
+
+    /* Entry methods */
+    .methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 820px; margin: 0 auto; }
+    .method { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 26px 20px; text-align: center; box-shadow: var(--shadow-sm); transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+    .method:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .method .mi { width: 48px; height: 48px; border-radius: 14px; background: var(--orange-light); color: var(--orange-dark); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .method .mi svg { width: 24px; height: 24px; }
+    .method h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .method p { font-size: 0.86rem; color: var(--ink-muted); }
+
+    /* Privacy band */
+    .privacy { background: var(--ink); color: var(--cream); border-radius: clamp(24px, 4vw, 40px); padding: clamp(40px, 6vw, 72px); text-align: center; max-width: 900px; margin: 0 auto; box-shadow: var(--shadow-lg); }
+    .privacy .lock { width: 56px; height: 56px; border-radius: 16px; background: rgba(224,116,43,0.18); color: var(--orange); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+    .privacy h2 { color: var(--cream); }
+    .privacy p { margin: 18px auto 0; max-width: 56ch; color: rgba(253,248,243,0.78); font-weight: 300; font-size: 1.06rem; }
+    .privacy .pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+    .privacy .pill { font-size: 0.82rem; font-weight: 500; padding: 8px 16px; border-radius: 100px; background: rgba(253,248,243,0.08); border: 1px solid rgba(253,248,243,0.14); color: rgba(253,248,243,0.9); }
+
+    /* Final CTA */
+    .final { text-align: center; }
+    .final h2 { margin-bottom: 10px; }
+    .final .note { margin-top: 26px; font-size: 0.82rem; color: var(--ink-muted); }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer.site { border-top: 1px solid var(--line); padding: 48px 0 40px; position: relative; z-index: 1; }
+    .foot { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; justify-content: space-between; }
+    .foot .brand { max-width: 300px; }
+    .foot .brand .logo { margin-bottom: 12px; }
+    .foot .brand p { font-size: 0.86rem; color: var(--ink-muted); }
+    .foot nav { display: flex; gap: 22px; flex-wrap: wrap; }
+    .foot nav a { font-size: 0.9rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
+    .foot nav a:hover, .foot nav a:focus-visible { color: var(--orange-dark); text-decoration: underline; }
+    .foot-bottom { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; font-size: 0.8rem; color: var(--ink-muted); }
+    a:focus-visible, button:focus-visible, video:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 8px; }
+
+    /* ── Reveal-on-scroll (only when motion is welcome) ─────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+      .reveal.in { opacity: 1; transform: none; }
+      .hero .hero-eyebrow, .hero h1, .hero .lede, .hero .hero-cta { opacity: 0; animation: rise .8s var(--ease) forwards; }
+      .hero h1 { animation-delay: .08s; } .hero .lede { animation-delay: .16s; } .hero .hero-cta { animation-delay: .24s; }
+      .phone { opacity: 0; animation: rise .9s var(--ease) .2s forwards; }
+      @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
     }
 
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .hero .wrap { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+      .hero-eyebrow { }
+      .lede { max-width: none; margin-left: auto; margin-right: auto; }
+      .hero-cta { justify-content: center; }
+      .split { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+      .split.rev .copy { order: 0; }
+      .split h2 { text-align: center; }
+      .split .copy { max-width: 540px; margin: 0 auto; }
+      .flist { text-align: left; max-width: 420px; margin-left: auto; margin-right: auto; }
+      .steps { text-align: left; max-width: 460px; margin-left: auto; margin-right: auto; }
+      .methods { grid-template-columns: repeat(2, 1fr); }
     }
-
-    .nav-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--orange);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav-icon svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .nav-wordmark {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: -0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-    .nav-links a {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--ink-soft);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-links a:hover,
-    .nav-links a:focus-visible { color: var(--orange-dark); }
-    .nav-links a[aria-current="page"] { color: var(--orange-dark); font-weight: 600; }
-    .nav-links a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
-
     @media (max-width: 560px) {
-      nav { padding: 14px 16px; }
-      .nav-links { gap: 14px; }
-      .nav-links a { font-size: 0.85rem; }
-      .nav-wordmark { font-size: 1.15rem; }
-    }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Decorative rings */
-    .ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(242, 101, 34, 0.12);
-      pointer-events: none;
-    }
-    .ring-1 { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-    .ring-2 { width: 720px; height: 720px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-    .ring-3 { width: 960px; height: 960px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-color: rgba(242, 101, 34, 0.06); }
-
-    /* App icon */
-    .app-icon {
-      width: 96px;
-      height: 96px;
-      background: var(--orange);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 36px;
-      box-shadow: 0 20px 60px rgba(242, 101, 34, 0.35);
-      animation: floatIcon 4s ease-in-out infinite;
-    }
-
-    @keyframes floatIcon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .app-icon svg {
-      width: 52px;
-      height: 52px;
-    }
-
-    .eyebrow {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 16px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.2s forwards;
-    }
-
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.35s forwards;
-    }
-
-    .subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      font-weight: 300;
-      color: var(--ink-soft);
-      letter-spacing: 0.01em;
-      margin-bottom: 56px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.5s forwards;
-    }
-
-    /* Coming soon badge */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--ink);
-      color: var(--cream);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 12px 28px;
-      border-radius: 100px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.65s forwards;
-    }
-
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--orange);
-      border-radius: 50%;
-      animation: pulse 2s ease infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    /* Notify section */
-    .notify-section {
-      margin-top: 48px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.8s forwards;
-    }
-
-    .notify-section p {
-      font-size: 0.85rem;
-      color: var(--ink-muted);
-      margin-bottom: 16px;
-    }
-
-    .notify-form {
-      display: flex;
-      gap: 10px;
-      max-width: 380px;
-      margin: 0 auto;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .notify-input {
-      flex: 1;
-      min-width: 200px;
-      padding: 14px 18px;
-      border: 1.5px solid rgba(242, 101, 34, 0.25);
-      border-radius: 12px;
-      background: white;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .notify-input:focus {
-      border-color: var(--orange);
-    }
-
-    .notify-input::placeholder {
-      color: var(--ink-muted);
-    }
-
-    .notify-btn {
-      padding: 14px 24px;
-      background: var(--orange);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      white-space: nowrap;
-    }
-
-    .notify-btn:hover { background: var(--orange-dark); }
-    .notify-btn:active { transform: scale(0.98); }
-
-    /* Features strip */
-    .features {
-      display: flex;
-      gap: 32px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 80px;
-      padding: 0 24px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 1s forwards;
-    }
-
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--ink-muted);
-      font-weight: 400;
-    }
-
-    .feature-icon {
-      width: 18px;
-      height: 18px;
-      background: var(--orange-light);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .feature-icon svg {
-      width: 10px;
-      height: 10px;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 40px 24px;
-      font-size: 0.78rem;
-      color: var(--ink-muted);
-      position: relative;
-      z-index: 1;
-    }
-    .foot-links {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-    .foot-links a {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--ink-soft);
-      text-decoration: none;
-    }
-    .foot-links a:hover,
-    .foot-links a:focus-visible { color: var(--orange-dark); text-decoration: underline; }
-    .foot-copy { font-size: 0.78rem; color: var(--ink-muted); }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Success state */
-    .success-msg {
-      display: none;
-      color: var(--orange);
-      font-size: 0.85rem;
-      font-weight: 500;
-      margin-top: 8px;
+      .wrap { padding: 0 18px; }
+      .navbar { padding: 12px 18px; }
+      .navlinks { gap: 1px; }
+      .navlinks a { padding: 6px 8px; font-size: 0.84rem; }
+      .logo .word { font-size: 1.15rem; }
+      .explore-pair { gap: 12px; }
+      .explore-pair .shot { max-width: 46vw; }
+      .foot-bottom { justify-content: center; text-align: center; }
     }
   </style>
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Nav -->
-  <nav>
-    <a class="nav-logo" href="/">
-      <div class="nav-icon" style="background:none">
-        <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="ForkSmart" style="width:100%;height:100%;object-fit:contain;display:block">
-      </div>
-      <span class="nav-wordmark"><span style="color:#E0742B">Fork</span>Smart</span>
-    </a>
-    <div class="nav-links">
-      <a href="/" aria-current="page">Home</a>
-      <a href="/support">Support</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="site">
+    <div class="navbar">
+      <a class="logo" href="/" aria-label="ForkSmart home">
+        <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="" width="34" height="34" />
+        <span class="word"><b>Fork</b>Smart</span>
+      </a>
+      <nav class="navlinks" aria-label="Primary">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/support">Support</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <!-- Hero -->
-  <main class="hero">
-    <!-- Decorative rings -->
-    <div class="ring ring-1"></div>
-    <div class="ring ring-2"></div>
-    <div class="ring ring-3"></div>
-
-    <!-- App icon -->
-    <div class="app-icon" style="background:none;box-shadow:none">
-      <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="ForkSmart" style="width:100%;height:100%;object-fit:contain;display:block">
-    </div>
-
-    <p class="eyebrow">iOS App</p>
-    <h1><span style="color:#E0742B">Fork</span>Smart</h1>
-    <p class="subtitle">A Private Personal Dining Journal</p>
-
-    <div class="badge">
-      <span class="badge-dot"></span>
-      Coming Soon
-    </div>
-
-    <div class="notify-section">
-      <p>Be the first to know when we launch</p>
-      <div class="notify-form">
-        <input class="notify-input" type="email" placeholder="you@example.com" id="notifyEmail" />
-        <button class="notify-btn" onclick="handleNotify()">Notify Me</button>
-      </div>
-      <p class="success-msg" id="successMsg">✓ You're on the list! We'll be in touch.</p>
-    </div>
-
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon">
-          <svg viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#E0742B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <main id="main">
+    <!-- ── Hero ─────────────────────────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-h">
+      <div class="ring a" aria-hidden="true"></div>
+      <div class="ring b" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="hero-copy">
+          <span class="hero-eyebrow">iOS · Private dining journal</span>
+          <h1 id="hero-h">Turn receipts into <span class="accent">memories.</span></h1>
+          <p class="lede">Snap or upload a receipt and ForkSmart turns it into a private dining journal — complete with restaurants, dishes, prices, ratings, photos and notes.</p>
+          <div class="hero-cta">
+            <!-- LAUNCH-CTA (reusable): replace .cta-soon with an App Store badge + QR at launch -->
+            <div class="cta">
+              <div class="cta-soon">
+                <span class="badge"><span class="dot"></span>Coming Soon</span>
+                <span class="sub">Coming to the App Store for iPhone.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        Private & Secure
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#E0742B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="phone-col">
+          <div class="phone">
+            <span class="phone-glow" aria-hidden="true"></span>
+            <video class="phone-video" controls muted playsinline preload="none"
+                   poster="/Assets/opt/video-poster.jpg" width="300" height="650"
+                   aria-label="ForkSmart app preview video">
+              <source src="/Assets/app-preview.mp4" type="video/mp4" />
+              Your browser can’t play this preview.
+              <a href="/Assets/app-preview.mp4">Download the ForkSmart app preview</a>.
+            </video>
+          </div>
         </div>
-        Log Every Meal
       </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#E0742B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </section>
+
+    <!-- ── 1. Receipt to journal (the differentiator) ───────── -->
+    <section class="tint" aria-labelledby="receipt-h">
+      <div class="wrap">
+        <div class="split">
+          <div class="copy reveal">
+            <span class="eyebrow">The magic</span>
+            <h2 id="receipt-h">From receipt to journal, automatically.</h2>
+            <p class="body">This is the heart of ForkSmart. There’s no tedious data entry — the receipt does the work.</p>
+            <div class="steps">
+              <div class="step"><span class="num">1</span><div><div class="st">Snap or upload a receipt</div><div class="sd">Paper, a photo from your library, or a PDF.</div></div></div>
+              <div class="step"><span class="num">2</span><div><div class="st">ForkSmart reads it</div><div class="sd">It scans the receipt and understands what’s on it.</div></div></div>
+              <div class="step"><span class="num">3</span><div><div class="st">The details are extracted</div><div class="sd">Restaurant, date, dishes and prices — pulled out for you.</div></div></div>
+              <div class="step"><span class="num">4</span><div><div class="st">You get an organized experience</div><div class="sd">Ready to rate, annotate and remember.</div></div></div>
+            </div>
+          </div>
+          <div class="shot-frame reveal">
+            <img class="shot" src="/Assets/opt/02-from-receipt-to-journal-800.jpg"
+                 srcset="/Assets/opt/02-from-receipt-to-journal-480.jpg 480w, /Assets/opt/02-from-receipt-to-journal-800.jpg 800w"
+                 sizes="(max-width: 860px) 78vw, 326px" width="800" height="1734" loading="lazy" decoding="async"
+                 alt="ForkSmart reading a receipt: on-screen steps show cropping the receipt, uploading the image, scanning with AI and checking for duplicates." />
+          </div>
         </div>
-        Beautiful Journals
       </div>
-    </div>
+    </section>
+
+    <!-- ── 2. Remember every visit ──────────────────────────── -->
+    <section aria-labelledby="visit-h">
+      <div class="wrap">
+        <div class="split rev">
+          <div class="copy reveal">
+            <span class="eyebrow">Every visit</span>
+            <h2 id="visit-h">Remember every visit.</h2>
+            <p class="body">Keep the whole story of a meal in one private place — long after the plates are cleared.</p>
+            <ul class="flist">
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Rate food, service, ambience and value</li>
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Note noise level, dining type and number of diners</li>
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Save photos, receipts and personal observations</li>
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Mark business meals and generate Business Meal Reports</li>
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Get reminders about favorite dishes when you return</li>
+            </ul>
+          </div>
+          <div class="shot-frame reveal">
+            <img class="shot" src="/Assets/opt/03-your-full-dining-story-800.jpg"
+                 srcset="/Assets/opt/03-your-full-dining-story-480.jpg 480w, /Assets/opt/03-your-full-dining-story-800.jpg 800w"
+                 sizes="(max-width: 860px) 78vw, 326px" width="800" height="1734" loading="lazy" decoding="async"
+                 alt="A ForkSmart dining experience showing the restaurant, date, ratings, notes and photos for a single visit." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. Remember every dish ───────────────────────────── -->
+    <section class="tint" aria-labelledby="dish-h">
+      <div class="wrap">
+        <div class="split">
+          <div class="copy reveal">
+            <span class="eyebrow">Every dish</span>
+            <h2 id="dish-h">Every dish, remembered.</h2>
+            <p class="body">ForkSmart keeps a history of the plates themselves — so you always know what to order again.</p>
+            <ul class="flist">
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Save dish names, prices, photos and descriptions</li>
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Rate individual dishes for yourself and your loved ones</li>
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Add notes on what to order again — or how you’d change it</li>
+              <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Review a dish’s order history across multiple visits</li>
+            </ul>
+          </div>
+          <div class="shot-frame reveal">
+            <img class="shot" src="/Assets/opt/04-rate-the-dish-800.jpg"
+                 srcset="/Assets/opt/04-rate-the-dish-480.jpg 480w, /Assets/opt/04-rate-the-dish-800.jpg 800w"
+                 sizes="(max-width: 860px) 78vw, 326px" width="800" height="1734" loading="lazy" decoding="async"
+                 alt="ForkSmart’s dish rating editor with a star rating, price, photo and notes for an individual dish." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. Explore your history (map + list) ─────────────── -->
+    <section aria-labelledby="explore-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Your history</span>
+          <h2 id="explore-h">Explore your dining history.</h2>
+          <p>Search, sort and rediscover every place you’ve been — and find your next meal on a map made from your own visits.</p>
+        </div>
+        <div class="explore-pair reveal" style="margin-bottom: 34px;">
+          <img class="shot" src="/Assets/opt/05-see-where-youve-dined-800.jpg"
+               srcset="/Assets/opt/05-see-where-youve-dined-480.jpg 480w, /Assets/opt/05-see-where-youve-dined-800.jpg 800w"
+               sizes="(max-width: 560px) 46vw, 260px" width="800" height="1734" loading="lazy" decoding="async"
+               alt="A personalized map of restaurants ForkSmart has logged, with nearby dining options highlighted." />
+          <img class="shot" src="/Assets/opt/01-every-meal-remembered-800.jpg"
+               srcset="/Assets/opt/01-every-meal-remembered-480.jpg 480w, /Assets/opt/01-every-meal-remembered-800.jpg 800w"
+               sizes="(max-width: 560px) 46vw, 260px" width="800" height="1734" loading="lazy" decoding="async"
+               alt="A searchable list of past dining experiences in ForkSmart, each with a rating, price level and location." />
+        </div>
+        <div class="reveal" style="max-width: 760px; margin: 0 auto;">
+          <ul class="flist" style="grid-template-columns: 1fr 1fr; gap: 12px 28px;">
+            <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Browse restaurants or individual visits</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sort by visit date or your rating</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Search by restaurant, dish, location, cuisine or notes</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>See your restaurants and ratings on a personalized map</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Discover other dining options nearby</li>
+            <li><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6.5l3 3 6-7" stroke="#4E7B52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Compare ratings, price levels and previous visits</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. Preserve and share ────────────────────────────── -->
+    <section class="tint" aria-labelledby="share-h">
+      <div class="wrap">
+        <div class="split rev">
+          <div class="copy reveal">
+            <span class="eyebrow">Preserve &amp; share</span>
+            <h2 id="share-h">Preserve and share the moment.</h2>
+            <p class="body">Turn a memorable meal into a beautiful, shareable postcard featuring your photo, rating and notes — perfect for anniversary dinners, vacations and meals worth remembering.</p>
+            <p class="body" style="margin-top:14px;"><strong style="color:var(--ink);font-weight:600;">Your journal stays private.</strong> You decide if and what you share — nothing is posted publicly on your behalf.</p>
+          </div>
+          <div class="shot-frame reveal">
+            <img class="shot" src="/Assets/opt/07-share-the-memory-800.jpg"
+                 srcset="/Assets/opt/07-share-the-memory-480.jpg 480w, /Assets/opt/07-share-the-memory-800.jpg 800w"
+                 sizes="(max-width: 860px) 78vw, 326px" width="800" height="1734" loading="lazy" decoding="async"
+                 alt="A ForkSmart shareable postcard with a restaurant photo, name, date, star rating and a personal note." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. Add it your way ───────────────────────────────── -->
+    <section aria-labelledby="add-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Capture visits your way</span>
+          <h2 id="add-h">Add it your way.</h2>
+          <p>Every visit gets in the journal — however you like to capture it.</p>
+        </div>
+        <div class="methods reveal">
+          <div class="method">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v13H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 7l1.5-3h13L20 7M8 11h8M8 15h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Paper receipt</h3><p>Photograph it on the spot</p>
+          </div>
+          <div class="method">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="13" r="3.4" stroke="currentColor" stroke-width="1.7"/><path d="M8 6l1.5-2h5L16 6" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>
+            <h3>Photo receipt</h3><p>Import from your library</p>
+          </div>
+          <div class="method">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 13h6M9 16h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <h3>PDF receipt</h3><p>Upload an image or PDF</p>
+          </div>
+          <div class="method">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20l4-1L19 8a2.1 2.1 0 00-3-3L5 16l-1 4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 7l3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <h3>Manual entry</h3><p>Add an experience by hand</p>
+          </div>
+        </div>
+        <div class="shot-frame reveal" style="margin-top: 40px;">
+          <img class="shot" src="/Assets/opt/08-add-it-your-way-800.jpg"
+               srcset="/Assets/opt/08-add-it-your-way-480.jpg 480w, /Assets/opt/08-add-it-your-way-800.jpg 800w"
+               sizes="(max-width: 860px) 78vw, 326px" width="800" height="1734" loading="lazy" decoding="async"
+               alt="ForkSmart’s New Entry screen offering four ways to add a visit: paper receipt, photo receipt, PDF receipt, or manual entry." />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. Private by design ─────────────────────────────── -->
+    <section aria-labelledby="privacy-h">
+      <div class="wrap">
+        <div class="privacy reveal">
+          <span class="lock"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V8a4 4 0 018 0v2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="15" r="1.4" fill="currentColor"/></svg></span>
+          <h2 id="privacy-h">Private by design.</h2>
+          <p>ForkSmart is a personal journal, not a public restaurant-review network. Your dining history is organized for you and is never published as a public feed. Export and save your data at any time — it’s yours.</p>
+          <div class="pills">
+            <span class="pill">No public review feed</span>
+            <span class="pill">Your data, exportable</span>
+            <span class="pill">For business meals too</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 8. Final launch callout ──────────────────────────── -->
+    <section class="tint final" aria-labelledby="final-h">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Almost time</span>
+          <h2 id="final-h">From everyday lunches to once-in-a-lifetime meals.</h2>
+          <p class="sub" style="margin: 8px auto 30px; max-width: 46ch; color: var(--ink-soft); font-weight: 300; font-size: 1.06rem;">ForkSmart helps make sure the details are never forgotten.</p>
+          <!-- LAUNCH-CTA (reusable): replace .cta-soon with an App Store badge + QR at launch -->
+          <div class="cta" style="align-items:center;">
+            <div class="cta-soon">
+              <span class="badge"><span class="dot"></span>Coming Soon</span>
+              <span class="sub">Coming to the App Store for iPhone.</span>
+            </div>
+          </div>
+          <p class="note">Some features require a ForkSmart Plus or Pro subscription.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <nav class="foot-links" aria-label="Footer">
-      <a href="/">Home</a>
-      <a href="/support">Support</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
-    </nav>
-    <div class="foot-copy">© 2026 AppSimple LLC. All rights reserved.</div>
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="site">
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand">
+          <a class="logo" href="/" aria-label="ForkSmart home">
+            <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="" width="34" height="34" />
+            <span class="word"><b>Fork</b>Smart</span>
+          </a>
+          <p>Your private dining journal. Turn receipts into memories — and keep every visit, dish and destination in one place that’s yours alone.</p>
+        </div>
+        <nav aria-label="Footer">
+          <a href="/">Home</a>
+          <a href="/support">Support</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+        </nav>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 AppSimple LLC. All rights reserved.</span>
+        <span>ForkSmart is a private personal journal — your dining data is never published as a public feed.</span>
+      </div>
+    </div>
   </footer>
 
   <script>
-    function handleNotify() {
-      const email = document.getElementById('notifyEmail').value.trim();
-      const msg = document.getElementById('successMsg');
-      if (!email || !email.includes('@')) {
-        document.getElementById('notifyEmail').style.borderColor = '#e55';
+    // Reveal-on-scroll — respects reduced motion, degrades to fully visible.
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var els = document.querySelectorAll('.reveal');
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in'); });
         return;
       }
-      document.getElementById('notifyEmail').style.borderColor = '';
-      msg.style.display = 'block';
-      document.querySelector('.notify-form').style.opacity = '0.4';
-      document.querySelector('.notify-form').style.pointerEvents = 'none';
-    }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      els.forEach(function (el) { io.observe(el); });
+      // Safety: reveal everything shortly after load in case observers never fire.
+      window.addEventListener('load', function () {
+        setTimeout(function () { els.forEach(function (el) { el.classList.add('in'); }); }, 2500);
+      });
+    })();
   </script>
 </body>
 </html>
