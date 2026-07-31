@@ -145,6 +145,11 @@
     .navlinks a[aria-current="page"] { color: var(--orange-dark); font-weight: 600; }
     .navlinks a:focus-visible, .logo:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 8px; }
 
+    /* Mobile menu toggle — hidden on tablet/desktop, shown ≤640px */
+    .nav-toggle { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -6px -8px -6px 0; border: none; background: transparent; color: var(--ink); border-radius: 12px; cursor: pointer; }
+    .nav-toggle:hover { background: rgba(224,116,43,0.08); color: var(--orange-dark); }
+    .nav-toggle .i-x { display: none; }
+
     /* ── Buttons / chips ────────────────────────────────────── */
     .badge { display: inline-flex; align-items: center; gap: 9px; background: var(--ink); color: var(--cream); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 9px 18px; border-radius: 100px; }
     .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
@@ -267,11 +272,26 @@
       .steps { text-align: left; max-width: 460px; margin-left: auto; margin-right: auto; }
       .methods { grid-template-columns: repeat(2, 1fr); }
     }
+    /* Phones: collapse the nav into a tap-to-open menu so it never wraps */
+    @media (max-width: 640px) {
+      .nav-toggle { display: inline-flex; }
+      .nav-toggle[aria-expanded="true"] .i-bars { display: none; }
+      .nav-toggle[aria-expanded="true"] .i-x { display: inline; }
+      .navlinks {
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 2px;
+        background: var(--cream); border-bottom: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        padding: 8px 14px 16px;
+        display: none;
+      }
+      .nav-toggle[aria-expanded="true"] ~ .navlinks { display: flex; }
+      .navlinks a { padding: 13px 12px; font-size: 1rem; border-radius: 10px; }
+      .navlinks a[aria-current="page"] { background: var(--orange-light); color: var(--orange-dark); }
+    }
     @media (max-width: 560px) {
       .wrap { padding: 0 18px; }
       .navbar { padding: 12px 18px; }
-      .navlinks { gap: 1px; }
-      .navlinks a { padding: 6px 8px; font-size: 0.84rem; }
       .logo .word { font-size: 1.15rem; }
       .explore-pair { gap: 12px; }
       .explore-pair .shot { max-width: 46vw; }
@@ -289,7 +309,11 @@
         <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="" width="34" height="34" />
         <span class="word"><b>Fork</b>Smart</span>
       </a>
-      <nav class="navlinks" aria-label="Primary">
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav" type="button">
+        <svg class="i-bars" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        <svg class="i-x" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      </button>
+      <nav class="navlinks" id="primary-nav" aria-label="Primary">
         <a href="/" aria-current="page">Home</a>
         <a href="/support">Support</a>
         <a href="/privacy">Privacy</a>
@@ -557,6 +581,25 @@
   </footer>
 
   <script>
+    // Mobile menu toggle — accessible (aria-expanded), closes on nav/Escape/outside tap.
+    (function () {
+      var btn = document.getElementById('nav-toggle');
+      var nav = document.getElementById('primary-nav');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      }
+      btn.addEventListener('click', function () {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+      nav.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+      document.addEventListener('click', function (e) {
+        if (btn.getAttribute('aria-expanded') === 'true' && !e.target.closest('.navbar')) setOpen(false);
+      });
+    })();
+
     // Reveal-on-scroll — respects reduced motion, degrades to fully visible.
     (function () {
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
