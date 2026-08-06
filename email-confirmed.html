@@ -196,9 +196,9 @@
       </div>
 
       <h1>Email Confirmed</h1>
-      <p class="desc">Your email address has been updated successfully.</p>
+      <p class="desc">Your email address has been confirmed.</p>
       <p class="new-email" id="newEmail" style="display:none;"></p>
-      <p class="sub">You can now sign in to ForkSmart with your new email address.</p>
+      <p class="sub">You can now sign in to ForkSmart.</p>
 
       <a href="forknotes://email-confirmed" class="btn-app">Open ForkSmart</a>
       <a href="/" class="back-link">← Back to Home</a>
@@ -207,9 +207,10 @@
 
   <script>
     (function () {
-      // The email change is already confirmed server-side by the time Supabase
-      // redirects here — this page is purely a confirmation screen.
-      // If the new email is present in the token hash, show it for reference.
+      // Serves both first-signup and email-change confirmations. The email is
+      // already confirmed server-side by the time Supabase redirects here — this
+      // page is purely a confirmation screen. If the confirmed email is present
+      // in the token hash, show it for reference.
       try {
         var hash = window.location.hash ? window.location.hash.substring(1) : '';
         if (hash) {
