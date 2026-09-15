@@ -203,6 +203,7 @@
       transition: box-shadow 0.2s;
     }
     details[open] { box-shadow: var(--shadow); }
+    details#plans { scroll-margin-top: 90px; }
     summary {
       list-style: none;
       cursor: pointer;
@@ -326,7 +327,7 @@
   <nav>
     <a class="nav-logo" href="/">
       <span class="nav-icon">
-        <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="ForkSmart logo" />
+        <img src="/Assets/opt/logo-icon.png" alt="ForkSmart logo" />
       </span>
       <span class="nav-wordmark"><span style="color:#E0742B">Fork</span>Smart</span>
     </a>
@@ -385,6 +386,22 @@
     <!-- FAQ -->
     <section aria-labelledby="faq-heading">
       <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
+
+      <details open>
+        <summary>Is ForkSmart free?</summary>
+        <div class="faq-body">
+          <p>
+            Yes. The Free plan includes AI receipt reading, <strong>up to 10 dining
+            experiences</strong>, <strong>up to 5 photos per experience</strong>,
+            a private dining journal, and postcard sharing.
+          </p>
+          <p>
+            An experience is one dining visit. Returning to the same restaurant
+            creates another experience, so your experience count can be higher
+            than your restaurant count. Plus and Pro let you save unlimited dining experiences.
+          </p>
+        </div>
+      </details>
 
       <details>
         <summary>How do I add a dining experience?</summary>
@@ -466,10 +483,12 @@
         <summary>How do I export my information?</summary>
         <div class="faq-body">
           <p>
-            You can export your data at any time from <strong>Settings → Export Data</strong>
-            in the app. ForkSmart lets you export your restaurants, experiences, and
+            Data export is included in <strong>Plus and Pro</strong>. On either plan,
+            open <strong>Settings → Export My Data</strong> in the app to export
+            your restaurants, experiences, and
             dishes, as well as your saved receipts and photos, so you can keep your own copy.
           </p>
+          <p>On Free, this screen offers an upgrade to Plus or Pro before you can export.</p>
         </div>
       </details>
 
@@ -478,12 +497,21 @@
         <div class="faq-body">
           <p>
             You can delete your account directly in the app under
-            <strong>Settings → Account → Delete Account</strong>. Before you confirm,
-            we recommend exporting your data first so you keep a copy.
+            <strong>Settings → Subscriptions → Delete Account</strong>.
+            If you use Plus or Pro, you may export a copy of your data first;
+            exporting is optional and is not required to delete your account.
           </p>
           <p>
-            Deleting your account permanently removes your dining history, photos, and
-            saved data. You'll be asked to confirm before the deletion is scheduled.
+            You'll be asked to confirm with your password. <strong>Delete Account Now</strong>
+            signs you out immediately and prevents further sign-in. Your account and
+            all saved entries, including experiences, photos, notes, likes, and receipts,
+            are permanently deleted, normally within 24 hours. This request cannot be undone.
+          </p>
+          <p>
+            If you choose scheduled deletion instead, you can undo the request before
+            the future deletion date. Deleting your ForkSmart account does not cancel
+            an Apple-billed subscription; manage or cancel it separately in
+            <a href="https://apps.apple.com/account/subscriptions">Apple's subscription settings</a>.
           </p>
         </div>
       </details>
@@ -518,15 +546,20 @@
         </div>
       </details>
 
-      <details>
+      <details id="plans" open>
         <summary>Which features require Plus or Pro?</summary>
         <div class="faq-body">
+          <ul>
+            <li><strong>Plus</strong> includes the Free features plus unlimited dining
+              experiences, up to 20 photos per experience, dish photos, and data export.</li>
+            <li><strong>Pro</strong> includes all Plus features plus Partnership for
+              two accounts with one shared dining history, up to two shared members,
+              likes and dislikes for shared members, and meal expense reports for business meals.</li>
+          </ul>
           <p>
-            ForkSmart offers free features along with additional capabilities on its
-            paid plans. The most up-to-date list of what's included with Plus and Pro
-            is shown on the subscription screen in the app, under
-            <strong>Settings → Subscriptions</strong>, where you can also compare and
-            choose a plan.
+            Plus and Pro are available monthly or annually. Open
+            <strong>Settings → Subscriptions</strong> in the app to compare the plans
+            and see current prices in your App Store region before choosing a subscription.
           </p>
         </div>
       </details>

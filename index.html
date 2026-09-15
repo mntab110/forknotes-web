@@ -24,7 +24,7 @@
 
   <!-- ── SEO ─────────────────────────────────────────────────────────── -->
   <title>ForkSmart — Your Private Dining Journal | Turn Receipts into Memories</title>
-  <meta name="description" content="ForkSmart turns a receipt into a private dining journal. Snap or upload a receipt and it extracts the restaurant, date, dishes and prices — then add ratings, notes and photos to remember every visit and dish. A personal restaurant journal for iPhone. Coming soon." />
+  <meta name="description" content="Turn receipts into memories with ForkSmart, a private dining journal for iPhone. Save restaurants, dishes, ratings, photos and notes. Coming soon." />
   <link rel="canonical" href="https://forksmart.app/" />
   <meta name="theme-color" content="#FDF8F3" />
   <meta name="robots" content="index, follow" />
@@ -54,7 +54,7 @@
 
   <!-- Icons -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" />
+  <link rel="apple-touch-icon" href="/Assets/opt/apple-touch-icon.png" sizes="180x180" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -72,7 +72,7 @@
     "description": "A private dining journal for iPhone. Snap or upload a receipt and ForkSmart extracts the restaurant, date, dishes and prices, then lets you add ratings, notes and photos to remember every visit and dish.",
     "url": "https://forksmart.app/",
     "image": "https://forksmart.app/Assets/opt/og-image.jpg",
-    "publisher": { "@type": "Organization", "name": "AppSimple LLC", "url": "https://forksmart.app/" }
+    "publisher": { "@type": "Organization", "name": "AppSimple LLC", "url": "https://appsimple.com/" }
   }
   </script>
 
@@ -197,6 +197,7 @@
     .shot-frame { display: flex; justify-content: center; }
     .split.rev .shot-frame { justify-content: center; }
     .shot { width: 100%; max-width: 326px; height: auto; border-radius: 30px; box-shadow: var(--shadow-md); background: var(--cream-2); }
+    .shot.postcard { border-radius: 0; }
     .explore-pair { display: flex; gap: 22px; justify-content: center; }
     .explore-pair .shot { max-width: 260px; }
     .explore-pair .shot:nth-child(2) { margin-top: 40px; }
@@ -306,7 +307,7 @@
   <header class="site">
     <div class="navbar">
       <a class="logo" href="/" aria-label="ForkSmart home">
-        <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="" width="34" height="34" />
+        <img src="/Assets/opt/logo-icon.png" alt="" width="34" height="34" />
         <span class="word"><b>Fork</b>Smart</span>
       </a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav" type="button">
@@ -475,10 +476,10 @@
             <p class="body" style="margin-top:14px;"><strong style="color:var(--ink);font-weight:600;">Your journal stays private.</strong> You decide if and what you share — nothing is posted publicly on your behalf.</p>
           </div>
           <div class="shot-frame reveal">
-            <img class="shot" src="/Assets/opt/07-share-the-memory-800.jpg"
-                 srcset="/Assets/opt/07-share-the-memory-480.jpg 480w, /Assets/opt/07-share-the-memory-800.jpg 800w"
-                 sizes="(max-width: 860px) 78vw, 326px" width="800" height="1734" loading="lazy" decoding="async"
-                 alt="A ForkSmart shareable postcard with a restaurant photo, name, date, star rating and a personal note." />
+            <img class="shot postcard" src="/Assets/opt/07-forksmart-postcard-800.jpg"
+                 srcset="/Assets/opt/07-forksmart-postcard-480.jpg 480w, /Assets/opt/07-forksmart-postcard-800.jpg 800w"
+                 sizes="(max-width: 860px) 78vw, 326px" width="800" height="1066" loading="lazy" decoding="async"
+                 alt="Finished ForkSmart postcard for 1001 Nights in Doha, Qatar, with a restaurant photo, five-star rating and a personal note." />
           </div>
         </div>
       </div>
@@ -525,7 +526,7 @@
         <div class="privacy reveal">
           <span class="lock"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V8a4 4 0 018 0v2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="15" r="1.4" fill="currentColor"/></svg></span>
           <h2 id="privacy-h">Private by design.</h2>
-          <p>ForkSmart is a personal journal, not a public restaurant-review network. Your dining history is organized for you and is never published as a public feed. Export and save your data at any time — it’s yours.</p>
+          <p>ForkSmart is a personal journal, not a public restaurant-review network. Your dining history is organized for you and is never published as a public feed. On Plus and Pro, export and save your data at any time — it’s yours.</p>
           <div class="pills">
             <span class="pill">No public review feed</span>
             <span class="pill">Your data, exportable</span>
@@ -549,7 +550,7 @@
               <span class="sub">Coming to the App Store for iPhone.</span>
             </div>
           </div>
-          <p class="note">Some features require a ForkSmart Plus or Pro subscription.</p>
+          <p class="note">Start free with up to 10 dining experiences. Some features require a ForkSmart Plus or Pro subscription. <a href="/support#plans">Compare the plans.</a></p>
         </div>
       </div>
     </section>
@@ -561,7 +562,7 @@
       <div class="foot">
         <div class="brand">
           <a class="logo" href="/" aria-label="ForkSmart home">
-            <img src="https://npaszheuxcxoivelrlyq.supabase.co/storage/v1/object/public/assets/email/logo-icon.png" alt="" width="34" height="34" />
+            <img src="/Assets/opt/logo-icon.png" alt="" width="34" height="34" />
             <span class="word"><b>Fork</b>Smart</span>
           </a>
           <p>Your private dining journal. Turn receipts into memories — and keep every visit, dish and destination in one place that’s yours alone.</p>
