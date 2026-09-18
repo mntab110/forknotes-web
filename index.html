@@ -24,7 +24,7 @@
 
   <!-- ── SEO ─────────────────────────────────────────────────────────── -->
   <title>ForkSmart — Your Private Dining Journal | Turn Receipts into Memories</title>
-  <meta name="description" content="Turn receipts into memories with ForkSmart, a private dining journal for iPhone. Save restaurants, dishes, ratings, photos and notes. Coming soon." />
+  <meta name="description" content="Turn receipts into memories with ForkSmart, a private dining journal for iPhone. Save restaurants, dishes, ratings, photos and notes. Download on the App Store." />
   <link rel="canonical" href="https://forksmart.app/" />
   <meta name="theme-color" content="#FDF8F3" />
   <meta name="robots" content="index, follow" />
@@ -33,7 +33,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ForkSmart" />
   <meta property="og:title" content="ForkSmart — Your Private Dining Journal" />
-  <meta property="og:description" content="Snap or upload a receipt and ForkSmart turns it into a private dining journal — restaurants, dishes, prices, ratings, photos and notes. Coming soon for iPhone." />
+  <meta property="og:description" content="Snap or upload a receipt and ForkSmart turns it into a private dining journal — restaurants, dishes, prices, ratings, photos and notes. Available for iPhone." />
   <meta property="og:url" content="https://forksmart.app/" />
   <meta property="og:image" content="https://forksmart.app/Assets/opt/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -43,11 +43,12 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="ForkSmart — Your Private Dining Journal" />
-  <meta name="twitter:description" content="Turn receipts into memories. A private dining journal for iPhone — restaurants, dishes, prices, ratings, photos and notes. Coming soon." />
+  <meta name="twitter:description" content="Turn receipts into memories. A private dining journal for iPhone — restaurants, dishes, prices, ratings, photos and notes. Available on the App Store." />
   <meta name="twitter:image" content="https://forksmart.app/Assets/opt/og-image.jpg" />
 
   <!-- Apple / PWA -->
   <meta name="apple-mobile-web-app-title" content="ForkSmart" />
+  <meta name="apple-itunes-app" content="app-id=6782392550" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="format-detection" content="telephone=no" />
@@ -71,6 +72,7 @@
     "operatingSystem": "iOS",
     "description": "A private dining journal for iPhone. Snap or upload a receipt and ForkSmart extracts the restaurant, date, dishes and prices, then lets you add ratings, notes and photos to remember every visit and dish.",
     "url": "https://forksmart.app/",
+    "downloadUrl": "https://apps.apple.com/app/id6782392550",
     "image": "https://forksmart.app/Assets/opt/og-image.jpg",
     "publisher": { "@type": "Organization", "name": "AppSimple LLC", "url": "https://appsimple.com/" }
   }
@@ -155,12 +157,16 @@
     .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
     .eyebrow { display: inline-block; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; }
 
-    /* ── Launch CTA (REUSABLE — replace .cta-soon with an App Store badge + QR at launch) ── */
-    .cta { display: inline-flex; flex-direction: column; align-items: center; gap: 14px; }
-    .cta-soon { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; }
+    /* ── App Store launch CTA ──────────────────────────────── */
+    .cta { display: inline-flex; align-items: center; gap: 18px; }
+    .cta-copy, .qr-group { display: inline-flex; flex-direction: column; gap: 8px; }
+    .qr-group { align-items: center; }
+    .cta-stack { flex-direction: column; gap: 10px; }
+    .store-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 20px; border-radius: 12px; background: var(--ink); color: var(--cream); text-decoration: none; font-weight: 600; box-shadow: var(--shadow-sm); transition: background .15s, transform .15s; }
+    .store-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+    .qr-link { display: inline-block; background: #fff; padding: 9px; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-sm); }
+    .qr-link img { display: block; width: 128px; height: 128px; }
     .cta .sub { font-size: 0.9rem; color: var(--ink-muted); }
-    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.75); } }
-    @media (prefers-reduced-motion: no-preference) { .badge .dot { animation: pulse 2.4s ease infinite; } }
 
     /* ── Hero ───────────────────────────────────────────────── */
     .hero { position: relative; padding: 68px 0 40px; overflow: hidden; }
@@ -291,6 +297,8 @@
       .navlinks a[aria-current="page"] { background: var(--orange-light); color: var(--orange-dark); }
     }
     @media (max-width: 560px) {
+      .hero .cta { flex-direction: column; }
+      .hero .cta-copy { align-items: center; }
       .wrap { padding: 0 18px; }
       .navbar { padding: 12px 18px; }
       .logo .word { font-size: 1.15rem; }
@@ -334,11 +342,16 @@
           <h1 id="hero-h">Turn receipts into <span class="accent">memories.</span></h1>
           <p class="lede">Snap or upload a receipt and ForkSmart turns it into a private dining journal — complete with restaurants, dishes, prices, ratings, photos and notes.</p>
           <div class="hero-cta">
-            <!-- LAUNCH-CTA (reusable): replace .cta-soon with an App Store badge + QR at launch -->
             <div class="cta">
-              <div class="cta-soon">
-                <span class="badge"><span class="dot"></span>Coming Soon</span>
-                <span class="sub">Coming to the App Store for iPhone.</span>
+              <div class="cta-copy">
+                <a class="store-btn" href="https://apps.apple.com/app/id6782392550">Download on the App Store</a>
+                <span class="sub">Free to start on iPhone.</span>
+              </div>
+              <div class="qr-group">
+                <a class="qr-link" href="https://apps.apple.com/app/id6782392550" aria-label="Open ForkSmart on the App Store">
+                  <img src="/Assets/app-store-qr.svg" alt="QR code to download ForkSmart on the App Store" width="128" height="128" />
+                </a>
+                <span class="sub">Scan with your iPhone.</span>
               </div>
             </div>
           </div>
@@ -540,15 +553,15 @@
     <section class="tint final" aria-labelledby="final-h">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow">Almost time</span>
+          <span class="eyebrow">Available now</span>
           <h2 id="final-h">From everyday lunches to once-in-a-lifetime meals.</h2>
           <p class="sub" style="margin: 8px auto 30px; max-width: 46ch; color: var(--ink-soft); font-weight: 300; font-size: 1.06rem;">ForkSmart helps make sure the details are never forgotten.</p>
-          <!-- LAUNCH-CTA (reusable): replace .cta-soon with an App Store badge + QR at launch -->
-          <div class="cta" style="align-items:center;">
-            <div class="cta-soon">
-              <span class="badge"><span class="dot"></span>Coming Soon</span>
-              <span class="sub">Coming to the App Store for iPhone.</span>
-            </div>
+          <div class="cta cta-stack">
+            <a class="store-btn" href="https://apps.apple.com/app/id6782392550">Download on the App Store</a>
+            <a class="qr-link" href="https://apps.apple.com/app/id6782392550" aria-label="Open ForkSmart on the App Store">
+              <img src="/Assets/app-store-qr.svg" alt="QR code to download ForkSmart on the App Store" width="128" height="128" loading="lazy" />
+            </a>
+            <span class="sub">Scan with your iPhone.</span>
           </div>
           <p class="note">Start free with up to 10 dining experiences. Some features require a ForkSmart Plus or Pro subscription. <a href="/support#plans">Compare the plans.</a></p>
         </div>
