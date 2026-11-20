@@ -22,7 +22,7 @@ test('homepage description is a concise, factual product summary', () => {
   assert.match(description, /ForkSmart/);
   assert.match(description, /private dining journal/);
   assert.match(description, /iPhone/);
-  assert.match(home, /<title>ForkSmart — Your Private Dining Journal/);
+  assert.match(home, /<title>ForkSmart — AI Dining Journal &amp; Restaurant Tracker/);
 });
 
 test('application structured data identifies the actual publisher website', () => {
